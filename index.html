@@ -30,6 +30,7 @@
             --shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
             --font-main: 'Songti SC', 'SimSun', 'Microsoft YaHei', serif;
             --font-title: 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive;
+            --font-signature-name: 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive;
             --font-letter: 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif;
             --title-size: clamp(2.7rem, 9vw, 5rem);
             --subtitle-size: clamp(1rem, 3vw, 1.3rem);
@@ -445,8 +446,11 @@
 
         .signature-name {
             margin: 0;
-            font-family: var(--font-title);
+            font-family: var(--font-signature-name);
             font-size: var(--signature-name-size);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: 0.02em;
             color: var(--accent-pink);
         }
 
@@ -531,6 +535,7 @@
             margin: 38px 0 0;
             color: var(--text-soft);
             font-size: var(--hint-size);
+            font-style: italic;
             text-align: center;
             animation: pulse 2s ease-in-out infinite;
         }
@@ -675,7 +680,7 @@
             </button>
         </div>
 
-        <p class="hint-text" id="hint-text">* 点击页面边缘，稍等片刻，绽放爱的烟火 *</p>
+        <p class="hint-text" id="hint-text">点击页面边缘，稍等片刻，绽放爱的烟火</p>
     </main>
 
     <audio id="bg-music" loop autoplay preload="auto">
@@ -709,7 +714,7 @@
                 signature: '永远爱你的',
                 signatureName: 'Your Love',
                 postscript: 'P.S. 点击页面边缘或上方的爱心，稍等片刻，会有惊喜哦~',
-                hint: '* 点击页面边缘，稍等片刻，绽放爱的烟火 *'
+                hint: '点击页面边缘，稍等片刻，绽放爱的烟火'
             },
 
             // 信件正文：直接改这里即可，支持换行。
@@ -738,6 +743,8 @@ Forever Yours,
                 // 不使用在线字体，优先调用系统自带字体，适合中国大陆网络环境。
                 body: "'Songti SC', 'SimSun', 'Microsoft YaHei', serif",
                 title: "'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive",
+                // 英文签名专用字体。优先使用 Windows 常见的 Gabriola，效果更接近原来的手写感。
+                signatureName: "'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive",
                 letter: "'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif"
             },
 
@@ -863,6 +870,7 @@ Forever Yours,
             document.title = CONFIG.text.browserTitle;
             setCssVar('--font-main', CONFIG.fonts.body);
             setCssVar('--font-title', CONFIG.fonts.title);
+            setCssVar('--font-signature-name', CONFIG.fonts.signatureName);
             setCssVar('--font-letter', CONFIG.fonts.letter);
             setCssVar('--title-size', CONFIG.fontSizes.title);
             setCssVar('--subtitle-size', CONFIG.fontSizes.subtitle);
