@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+<!-- 如需修改配置参数等，请先查看下方<script>部分！ -->
+<!-- 如需修改配置参数等，请先查看下方<script>部分！ -->
+<!-- 如需修改配置参数等，请先查看下方<script>部分！ -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -749,15 +754,36 @@ Forever Yours,
             },
 
             fontSizes: {
+                /*
+                 * 尺寸格式说明：
+                 *  固定值：如 '2rem'、'60px'，直接设置字体大小
+                 *    rem = 相对单位，1rem ≈ 16px，数字越大字越大
+                 *    px  = 像素，绝对值
+                 *  响应式值：如 'clamp(最小, 偏好, 最大)'，字体随屏幕宽度自动缩放
+                 *    最小/最大：固定值如 '2rem'，到达该尺寸后不再变化
+                 *    偏好值：可用 'vw' 单位（屏幕宽度的百分比），如 '9vw' = 屏幕宽度的 9%
+                 *    当屏幕宽度在某个中间范围时，偏好值生效；屏幕太小时用最小值，太大时用最大值
+                 */
+
+                // 页面大标题（如 "To My Dearest"）
                 title: 'clamp(2.7rem, 9vw, 5rem)',
+                // 副标题（如 "情人节快乐！"）
                 subtitle: 'clamp(1rem, 3vw, 1.3rem)',
+                // 信件开头的日期文字
                 letterDate: '0.92rem',
+                // 信件开头的称呼（如 "亲爱的宝贝："）
                 letterGreeting: 'clamp(1.25rem, 4vw, 1.5rem)',
-                letterBody: 'clamp(1rem, 2.5vw, 1.1rem)',
+                // 信件正文
+                letterBody: 'clamp(1rem, 3vw, 1.3rem)',
+                // 信件正文的行高（数值越大每行字越稀疏）
                 letterLineHeight: '2',
+                // "永远爱你的" 签名文字
                 signature: '2rem',
+                // 签名人名（如 "Your Love"）
                 signatureName: '2.5rem',
+                // 页面底部的提示文字
                 hint: 'clamp(1rem, 3vw, 1.1rem)',
+                // 页面中央爱心图标的尺寸
                 heart: '60px'
             },
 
