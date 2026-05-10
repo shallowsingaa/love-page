@@ -14,12 +14,18 @@
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%95%3C/text%3E%3C/svg%3E">
     <!-- 中国大陆网络友好：字体使用 fonts.txt 中列出的在线源，其余样式和脚本均为本地内联。 -->
+    <link rel="preconnect" href="https://fontsapi.zeoseven.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.font.im" crossorigin>
+    <link rel="preload" href="https://fontsapi.zeoseven.com/285/main/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fontsapi.zeoseven.com/292/main/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.font.im/css?family=Caveat" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://fontsapi.zeoseven.com/285/main/result.css">
+        <link rel="stylesheet" href="https://fontsapi.zeoseven.com/292/main/result.css">
+        <link rel="stylesheet" href="https://fonts.font.im/css?family=Caveat">
+    </noscript>
 
     <style>
-        @import url('https://fontsapi.zeoseven.com/285/main/result.css');
-        @import url('https://fontsapi.zeoseven.com/292/main/result.css');
-        @import url('https://fonts.font.im/css?family=Caveat');
-
         @font-face {
             font-family: 'Dancing Script';
             src: url('https://fontsapi.zeoseven.com/486/main.woff2') format('woff2');
@@ -700,8 +706,8 @@
         <p class="hint-text" id="hint-text">点击页面边缘，稍等片刻，绽放爱的烟火</p>
     </main>
 
-    <audio id="bg-music" loop autoplay preload="auto">
-        <source id="music-source" src="music.mp3" type="audio/mpeg">
+    <audio id="bg-music" loop preload="none">
+        <source id="music-source" type="audio/mpeg">
     </audio>
 
     <script>
@@ -803,9 +809,10 @@ Forever Yours,
                 // 可改成 './audio/love.mp3'、'music.ogg' 等本地路径。
                 src: 'music.mp3',
                 type: 'audio/mpeg',
-                autoplay: true,
+                autoplay: false,
+                playOnFirstGesture: true,
                 loop: true,
-                preload: 'auto'
+                preload: 'none'
             },
 
             typing: {
@@ -824,6 +831,7 @@ Forever Yours,
                 maxSize: 35,
                 minDuration: 8,           // 下落最短时间，单位秒
                 maxDuration: 13,
+                maxActive: 16,            // 同时存在的爱心上限，避免 DOM 节点过多
                 colors: ['#e91e63', '#ff6b9d', '#f48fb1', '#f8bbd9', '#4db6ac']
             },
 
@@ -845,7 +853,12 @@ Forever Yours,
                 particleLineWidth: 2,
                 trailFade: 0.12,          // 残影消失速度，越大消失越快
                 frameInterval: 16,        // 约等于 60 FPS；想省电可改 24 或 32
-                maxDevicePixelRatio: 2
+                maxDevicePixelRatio: 2,
+                mobileMaxWidth: 768,
+                mobileBurstCount: 3,
+                mobileParticleCount: 45,
+                mobileFrameInterval: 24,
+                mobileMaxDevicePixelRatio: 1.5
             },
 
             theme: {
@@ -890,6 +903,7 @@ Forever Yours,
 
         const ctx = el.canvas.getContext('2d');
         let isMusicPlaying = false;
+        let isMusicReady = false;
         let typingTimer = 0;
         let currentCharIndex = 0;
         let heartsTimer = 0;
@@ -902,6 +916,14 @@ Forever Yours,
 
         function setCssVar(name, value) {
             root.style.setProperty(name, value);
+        }
+
+        function isCompactViewport() {
+            return window.innerWidth <= CONFIG.fireworks.mobileMaxWidth;
+        }
+
+        function getFireworkSetting(desktopKey, mobileKey) {
+            return isCompactViewport() ? CONFIG.fireworks[mobileKey] : CONFIG.fireworks[desktopKey];
         }
 
         function applyConfig() {
@@ -933,27 +955,47 @@ Forever Yours,
             el.postscriptText.textContent = CONFIG.text.postscript;
             el.hintText.textContent = CONFIG.text.hint;
 
-            el.musicSource.src = CONFIG.music.src;
+            el.musicSource.removeAttribute('src');
             el.musicSource.type = CONFIG.music.type;
             el.bgMusic.loop = CONFIG.music.loop;
             el.bgMusic.autoplay = CONFIG.music.autoplay;
             el.bgMusic.preload = CONFIG.music.preload;
-            el.bgMusic.load();
+            isMusicReady = false;
             updateMusicButton();
+        }
+
+        function readStoredTheme() {
+            try {
+                return CONFIG.theme.rememberUserChoice ? localStorage.getItem('theme') : null;
+            } catch (error) {
+                console.info('无法读取本地主题偏好，将使用默认主题。', error);
+                return null;
+            }
+        }
+
+        function writeStoredTheme(theme) {
+            if (!CONFIG.theme.rememberUserChoice) return;
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (error) {
+                console.info('无法保存本地主题偏好。', error);
+            }
         }
 
         function setTheme(theme) {
             const isDark = theme === 'dark';
-            root.toggleAttribute('data-theme', isDark);
+            if (isDark) {
+                root.setAttribute('data-theme', 'dark');
+            } else {
+                root.removeAttribute('data-theme');
+            }
             el.themeToggle.setAttribute('aria-pressed', String(isDark));
             el.metaThemeColor?.setAttribute('content', isDark ? CONFIG.theme.darkThemeColor : CONFIG.theme.lightThemeColor);
-            if (CONFIG.theme.rememberUserChoice) {
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            }
+            writeStoredTheme(isDark ? 'dark' : 'light');
         }
 
         function initTheme() {
-            const savedTheme = CONFIG.theme.rememberUserChoice ? localStorage.getItem('theme') : null;
+            const savedTheme = readStoredTheme();
             const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const configuredTheme = CONFIG.theme.default;
             const theme = savedTheme || (configuredTheme === 'system' ? (systemDark ? 'dark' : 'light') : configuredTheme);
@@ -962,11 +1004,12 @@ Forever Yours,
 
         function toggleTheme(event) {
             event.stopPropagation();
-            setTheme(root.hasAttribute('data-theme') ? 'light' : 'dark');
+            setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
         function resizeCanvas() {
-            const dpr = Math.min(window.devicePixelRatio || 1, CONFIG.fireworks.maxDevicePixelRatio);
+            const maxDpr = getFireworkSetting('maxDevicePixelRatio', 'mobileMaxDevicePixelRatio');
+            const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
             const width = window.innerWidth;
             const height = window.innerHeight;
             el.canvas.width = Math.floor(width * dpr);
@@ -1025,6 +1068,7 @@ Forever Yours,
 
         function createFallingHeart() {
             if (!CONFIG.hearts.enabled || prefersReducedMotion || document.hidden) return;
+            if (el.heartsContainer.childElementCount >= CONFIG.hearts.maxActive) return;
 
             const heart = document.createElement('span');
             const size = Math.round(randomBetween(CONFIG.hearts.minSize, CONFIG.hearts.maxSize));
@@ -1150,7 +1194,8 @@ Forever Yours,
 
         function createParticles(x, y) {
             if (!CONFIG.fireworks.enabled || prefersReducedMotion) return;
-            for (let i = 0; i < CONFIG.fireworks.particleCount; i += 1) {
+            const particleCount = getFireworkSetting('particleCount', 'mobileParticleCount');
+            for (let i = 0; i < particleCount; i += 1) {
                 particles.push(new Particle(x, y));
             }
         }
@@ -1166,7 +1211,8 @@ Forever Yours,
         function launchMultipleFireworks(event) {
             event?.stopPropagation();
             if (!CONFIG.fireworks.enabled || prefersReducedMotion) return;
-            for (let i = 0; i < CONFIG.fireworks.burstCount; i += 1) {
+            const burstCount = getFireworkSetting('burstCount', 'mobileBurstCount');
+            for (let i = 0; i < burstCount; i += 1) {
                 window.setTimeout(() => launchFirework(), i * CONFIG.fireworks.burstInterval);
             }
         }
@@ -1175,7 +1221,8 @@ Forever Yours,
             if (!isFireworksRunning) return;
             animationId = window.requestAnimationFrame(drawFireworks);
 
-            if (timestamp - lastFrameTime < CONFIG.fireworks.frameInterval) return;
+            const frameInterval = getFireworkSetting('frameInterval', 'mobileFrameInterval');
+            if (timestamp - lastFrameTime < frameInterval) return;
             lastFrameTime = timestamp;
 
             ctx.globalCompositeOperation = 'destination-out';
@@ -1217,6 +1264,14 @@ Forever Yours,
             el.musicBtn.setAttribute('aria-pressed', String(isMusicPlaying));
         }
 
+        function prepareMusic() {
+            if (isMusicReady) return;
+            el.musicSource.src = CONFIG.music.src;
+            el.musicSource.type = CONFIG.music.type;
+            el.bgMusic.load();
+            isMusicReady = true;
+        }
+
         async function tryPlayMusic() {
             if (!CONFIG.music.autoplay) {
                 isMusicPlaying = false;
@@ -1225,6 +1280,7 @@ Forever Yours,
             }
 
             try {
+                prepareMusic();
                 await el.bgMusic.play();
                 isMusicPlaying = true;
             } catch (error) {
@@ -1235,7 +1291,8 @@ Forever Yours,
         }
 
         function enableMusicOnFirstGesture() {
-            if (isMusicPlaying || !CONFIG.music.autoplay) return;
+            if (isMusicPlaying || !CONFIG.music.playOnFirstGesture) return;
+            prepareMusic();
             el.bgMusic.play().then(() => {
                 isMusicPlaying = true;
                 updateMusicButton();
@@ -1253,6 +1310,7 @@ Forever Yours,
                     el.bgMusic.pause();
                     isMusicPlaying = false;
                 } else {
+                    prepareMusic();
                     await el.bgMusic.play();
                     isMusicPlaying = true;
                 }
@@ -1297,7 +1355,9 @@ Forever Yours,
                 showLetter();
             });
             document.addEventListener('click', handlePageClick);
-            document.addEventListener('pointerdown', enableMusicOnFirstGesture, { passive: true });
+            if (CONFIG.music.playOnFirstGesture) {
+                document.addEventListener('pointerdown', enableMusicOnFirstGesture, { passive: true });
+            }
             document.addEventListener('visibilitychange', handleVisibilityChange);
 
             if (CONFIG.fireworks.initialEnabled && !prefersReducedMotion) {
