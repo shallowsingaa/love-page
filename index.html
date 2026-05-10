@@ -13,9 +13,21 @@
     <title>致我最爱的你 - 情人节快乐</title>
 
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%95%3C/text%3E%3C/svg%3E">
-    <!-- 中国大陆网络友好：不依赖 Google Fonts / CDN，所有样式和脚本均为本地内联。 -->
+    <!-- 中国大陆网络友好：字体使用 fonts.txt 中列出的在线源，其余样式和脚本均为本地内联。 -->
 
     <style>
+        @import url('https://fontsapi.zeoseven.com/285/main/result.css');
+        @import url('https://fontsapi.zeoseven.com/292/main/result.css');
+        @import url('https://fonts.font.im/css?family=Caveat');
+
+        @font-face {
+            font-family: 'Dancing Script';
+            src: url('https://fontsapi.zeoseven.com/486/main.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             color-scheme: light;
             --bg-pink: #fff0f3;
@@ -33,10 +45,10 @@
             --orb-3-color: #ffc0cb;
             --footer-bg: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(93, 179, 196, 0.1));
             --shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            --font-main: 'Songti SC', 'SimSun', 'Microsoft YaHei', serif;
-            --font-title: 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive;
-            --font-signature-name: 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive;
-            --font-letter: 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif;
+            --font-main: 'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', 'Microsoft YaHei', serif;
+            --font-title: 'Dancing Script', 'ZSFT-486', 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive;
+            --font-signature-name: 'Caveat', 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive;
+            --font-letter: 'LXGW WenKai', 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif;
             --title-size: clamp(2.7rem, 9vw, 5rem);
             --subtitle-size: clamp(1rem, 3vw, 1.3rem);
             --letter-date-size: 0.92rem;
@@ -700,7 +712,8 @@
          * 配置区：以后主要改这里
          * ============================================================
          * 说明：
-         * 1. 为了照顾中国大陆地区访问，本页面默认不依赖 Google Fonts、Tailwind CDN 等外部资源。
+         * 1. 为了照顾中国大陆地区访问，本页面默认不依赖 Google Fonts、Tailwind CDN 等，
+         *    而是使用国内 API + 本地 fallback 的方式。
          * 2. 音乐建议使用本地文件，例如 music.mp3，并和这个 HTML 放在同一文件夹。
          * 3. 数字越大不一定越好：烟花数量、粒子数量过高会增加手机耗电和卡顿。
          */
@@ -745,12 +758,11 @@ Forever Yours,
 你的爱人`,
 
             fonts: {
-                // 不使用在线字体，优先调用系统自带字体，适合中国大陆网络环境。
-                body: "'Songti SC', 'SimSun', 'Microsoft YaHei', serif",
-                title: "'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive",
-                // 英文签名专用字体。优先使用 Windows 常见的 Gabriola，效果更接近原来的手写感。
-                signatureName: "'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive",
-                letter: "'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif"
+                // 在线字体加载失败时，会继续使用后面的系统字体作为兜底。
+                body: "'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', 'Microsoft YaHei', serif",
+                title: "'Dancing Script', 'ZSFT-486', 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive",
+                signatureName: "'Caveat', 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive",
+                letter: "'LXGW WenKai', 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif"
             },
 
             fontSizes: {
@@ -774,7 +786,7 @@ Forever Yours,
                 // 信件开头的称呼（如 "亲爱的宝贝："）
                 letterGreeting: 'clamp(1.25rem, 4vw, 1.5rem)',
                 // 信件正文
-                letterBody: 'clamp(1rem, 3vw, 1.3rem)',
+                letterBody: 'clamp(1rem, 1.9vw, 1.15rem)',
                 // 信件正文的行高（数值越大每行字越稀疏）
                 letterLineHeight: '2',
                 // "永远爱你的" 签名文字

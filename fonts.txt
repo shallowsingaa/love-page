@@ -1,0 +1,21 @@
+// 注：以下所有url在中国大陆都可正常访问。
+
+1、霞鹜文楷
+font-family: "LXGW WenKai"
+font-weight: normal
+api_url：https://fontsapi.zeoseven.com/292/main/result.css
+
+2、Dancing Script
+font-family: "ZSFT-486"
+font-weight: normal
+api_url：https://fontsapi.zeoseven.com/486/main.woff2
+
+3、Caveat
+font-family: "Caveat"
+font-weight: regular
+api_url：https://fonts.font.im/css?family=Caveat
+
+4、思源宋体
+font-family: "Noto Serif CJK"
+font-weight: normal
+api_url：https://fontsapi.zeoseven.com/285/main/result.css
