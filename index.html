@@ -18,10 +18,12 @@
     <link rel="preconnect" href="https://fonts.font.im" crossorigin>
     <link rel="preload" href="https://fontsapi.zeoseven.com/285/main/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://fontsapi.zeoseven.com/292/main/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fontsapi.zeoseven.com/31/main/result.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="https://fonts.font.im/css?family=Caveat" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
         <link rel="stylesheet" href="https://fontsapi.zeoseven.com/285/main/result.css">
         <link rel="stylesheet" href="https://fontsapi.zeoseven.com/292/main/result.css">
+        <link rel="stylesheet" href="https://fontsapi.zeoseven.com/31/main/result.css">
         <link rel="stylesheet" href="https://fonts.font.im/css?family=Caveat">
     </noscript>
 
@@ -53,6 +55,11 @@
             --shadow-soft: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
             --font-main: 'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', 'Microsoft YaHei', serif;
             --font-title: 'Dancing Script', 'ZSFT-486', 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive;
+            --font-subtitle: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
+            --font-letter-date: 'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif;
+            --font-letter-greeting: 'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif;
+            --font-view-letter-button: 'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif;
+            --font-signature: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive;
             --font-signature-name: 'Caveat', 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive;
             --font-letter: 'LXGW WenKai', 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif;
             --title-size: clamp(2.7rem, 9vw, 5rem);
@@ -272,6 +279,7 @@
 
         .sub-title {
             margin: 0;
+            font-family: var(--font-subtitle);
             font-size: var(--subtitle-size);
             letter-spacing: 0.16em;
             color: var(--accent-pink);
@@ -369,12 +377,14 @@
 
         .letter-date {
             margin: 0 0 15px;
+            font-family: var(--font-letter-date);
             font-size: var(--letter-date-size);
             color: var(--text-soft);
         }
 
         .letter-greeting {
             margin: 0;
+            font-family: var(--font-letter-greeting);
             font-size: var(--letter-greeting-size);
             color: var(--accent-pink);
             font-weight: 600;
@@ -387,6 +397,7 @@
             padding: 16px 32px;
             border: 0;
             border-radius: 999px;
+            font-family: var(--font-view-letter-button);
             color: #fff;
             background: linear-gradient(135deg, var(--accent-rose), var(--accent-pink));
             box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
@@ -462,7 +473,7 @@
 
         .signature {
             margin: 0;
-            font-family: var(--font-title);
+            font-family: var(--font-signature);
             font-size: var(--signature-size);
             color: var(--accent-pink);
         }
@@ -767,6 +778,11 @@ Forever Yours,
                 // 在线字体加载失败时，会继续使用后面的系统字体作为兜底。
                 body: "'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', 'Microsoft YaHei', serif",
                 title: "'Dancing Script', 'ZSFT-486', 'Segoe Script', 'Brush Script MT', 'STKaiti', 'KaiTi', cursive",
+                subtitle: "'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive",
+                letterDate: "'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif",
+                letterGreeting: "'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif",
+                viewLetterButton: "'Noto Serif CJK', 'Source Han Serif SC', 'Songti SC', serif",
+                signature: "'Ma Shan Zheng', 'STKaiti', 'KaiTi', cursive",
                 signatureName: "'Caveat', 'Gabriola', 'Monotype Corsiva', 'Palace Script MT', 'Segoe Script', 'Brush Script MT', cursive",
                 letter: "'LXGW WenKai', 'KaiTi', 'STKaiti', 'Kaiti SC', '楷体', 'Songti SC', serif"
             },
@@ -786,7 +802,7 @@ Forever Yours,
                 // 页面大标题（如 "To My Dearest"）
                 title: 'clamp(2.7rem, 9vw, 5rem)',
                 // 副标题（如 "情人节快乐！"）
-                subtitle: 'clamp(1rem, 3vw, 1.3rem)',
+                subtitle: 'clamp(1.2rem, 3vw, 1.8rem)',
                 // 信件开头的日期文字
                 letterDate: '0.92rem',
                 // 信件开头的称呼（如 "亲爱的宝贝："）
@@ -796,9 +812,9 @@ Forever Yours,
                 // 信件正文的行高（数值越大每行字越稀疏）
                 letterLineHeight: '2',
                 // "永远爱你的" 签名文字
-                signature: '2rem',
+                signature: '1.6rem',
                 // 签名人名（如 "Your Love"）
-                signatureName: '2.5rem',
+                signatureName: '2.1rem',
                 // 页面底部的提示文字
                 hint: 'clamp(1rem, 3vw, 1.1rem)',
                 // 页面中央爱心图标的尺寸
@@ -930,6 +946,11 @@ Forever Yours,
             document.title = CONFIG.text.browserTitle;
             setCssVar('--font-main', CONFIG.fonts.body);
             setCssVar('--font-title', CONFIG.fonts.title);
+            setCssVar('--font-subtitle', CONFIG.fonts.subtitle);
+            setCssVar('--font-letter-date', CONFIG.fonts.letterDate);
+            setCssVar('--font-letter-greeting', CONFIG.fonts.letterGreeting);
+            setCssVar('--font-view-letter-button', CONFIG.fonts.viewLetterButton);
+            setCssVar('--font-signature', CONFIG.fonts.signature);
             setCssVar('--font-signature-name', CONFIG.fonts.signatureName);
             setCssVar('--font-letter', CONFIG.fonts.letter);
             setCssVar('--title-size', CONFIG.fontSizes.title);
