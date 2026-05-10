@@ -2,8 +2,6 @@
 
 一个精美的情人节告白网页，带有打字机效果、飘落爱心、烟花和背景音乐。
 
-[English](README_en.md)
-
 ## 效果预览
 
 页面加载后会自动绽放烟花，配有飘落的爱心动画。进入信件后可以看到打字机效果，逐字显示情书内容。
@@ -20,62 +18,28 @@
 
 ## 如何自定义
 
-### 修改情书内容
+### 修改各种配置
 
-打开 `index.html`，找到第 707 行的 `CONFIG.text` 对象，修改以下内容：
-
-```javascript
-text: {
-    browserTitle: '致我最爱的你 - 情人节快乐',  // 浏览器标签标题
-    pageTitle: 'To My Dearest',                  // 页面大标题
-    subtitle: '情人节快乐！',                      // 副标题
-    greeting: '亲爱的宝贝：',                       // 信件称呼
-    signature: '永远爱你的',                       // 签名
-    signatureName: 'Your Love',                   // 签名人名
-    // ...
-}
-```
-
-### 修改信件正文
-
-找到第 726 行的 `loveLetter` 变量，直接修改信件内容：
-
-```javascript
-loveLetter: `今天是情人节，我想用这封信，把平时说不出口的话都告诉你。
-...
-`
-```
+打开 `index.html`，找到 `<script>` 的 `CONFIG` 常量，即可修改各项配置。
 
 ### 更换音乐
 
-将你的音乐文件（如 `love.mp3`）放在 `index.html` 同级目录，然后修改配置：
+将你的音乐文件（如 `music.mp3`）放在 `index.html` 同级目录，然后修改配置：
 
 ```javascript
 music: {
-    src: 'love.mp3',  // 改为你的音乐文件名
+    src: 'music.mp3',  // 改为你的音乐文件路径（可用相对路径）
     // ...
 }
 ```
-
-### 调整动画效果
-
-在 `CONFIG` 对象中可以找到以下配置：
-
-| 配置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `hearts.interval` | 爱心生成间隔（毫秒） | 850 |
-| `hearts.probability` | 爱心生成概率（0-1） | 0.66 |
-| `fireworks.burstCount` | 每次烟花数量 | 5 |
-| `typing.normalDelay` | 普通字符打字速度（毫秒） | 62 |
-
-数值越大动画越密集，但可能导致手机卡顿。
 
 ## 文件结构
 
 ```
 love-page/
-├── index.html    # 主页面（所有代码都在里面）
-├── music.mp3     # 背景音乐（需自行添加）
+├── index.html    # 主页面（html+css+js）
+├── fonts.txt     # 引入的在线字体信息
+├── music.mp3     # 背景音乐
 └── README.md     # 说明文档
 ```
 
