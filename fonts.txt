@@ -19,3 +19,9 @@ api_url：https://fonts.font.im/css?family=Caveat
 font-family: "Noto Serif CJK"
 font-weight: normal
 api_url：https://fontsapi.zeoseven.com/285/main/result.css
+
+5、马善政
+（暂未使用，可用作 signatureName 的中文 Fallback 字体）
+font-family: "Ma Shan Zheng"
+font-weight: normal
+api_url：https://fontsapi.zeoseven.com/31/main/result.css
